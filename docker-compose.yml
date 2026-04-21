@@ -1,0 +1,33 @@
+version: "3.8"
+services:
+  alpine-test:
+    image: deathwalker66/alpine-test
+    container_name: DEV.Alpine-Test
+    hostname: dev-alpine-test  # Buena práctica añadir hostname
+    volumes:
+      - type: bind
+        source: /mnt/Dock/Com
+        target: /COM
+      - type: bind
+        source: ./SCP
+        target: /SCP
+      - type: bind
+        source: ./LOG
+        target: /var/log
+    ports:
+      - target: 22
+        published: 30024
+        protocol: tcp
+        mode: host  # Mejor rendimiento para SSH
+    networks:
+      - catnet
+    env_file: 
+      - .env
+    restart: unless-stopped  # Buena práctica para servicios
+    security_opt:
+      - no-new-privileges:true  # Mejor seguridad
+
+networks:
+  catnet:
+    name: catnet  # Definición explícita
+    external: true  # La red ya existe externamente
