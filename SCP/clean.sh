@@ -8,3 +8,4 @@
 
 ### Specific
     apk del tzdata 
+    rm -rf /var/log/*
